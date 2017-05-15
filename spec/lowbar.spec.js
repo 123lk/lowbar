@@ -121,4 +121,24 @@ describe('_', () => {
     });
   });
 
+  describe('map', () => {
+    it('is a function', () => {
+      expect(_.map).to.be.a('function');
+    });
+    it('produces a new array of values by mapping each value in list through a transformation function (iteratee)', () => {
+      let list = [1,2,3];
+      let iteratee = function (num) {return num + 1;};
+      let actual = _.map(list, iteratee);
+      let expected = [2,3,4];
+      expect(actual).to.eql(expected);
+    });
+    it('works for objects as well as arrays', () => {
+      let list = {one: 1, two: 2, three: 3};
+      let iteratee = function (num) {return num + 1;};
+      let actual = _.map(list, iteratee);
+      let expected = [2,3,4];
+      expect(actual).to.eql(expected);
+    });
+  });
+
 });

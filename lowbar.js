@@ -80,6 +80,21 @@ _.uniq = function (array) {
   return result;
 };
 
+_.map = function (list, iteratee) {
+  let result = [];
+
+  if (Array.isArray(list)) {
+  for (let i = 0; i < list.length; i++) {
+    result.push(iteratee(list[i], i, list));
+  } 
+  } else {
+    for (let key in list) {
+      result.push(iteratee(list[key], key, list));
+    }
+  }
+  return result;
+};
+
 if (typeof module !== 'undefined') {
   module.exports = _;
 }
