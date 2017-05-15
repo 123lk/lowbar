@@ -108,4 +108,17 @@ describe('_', () => {
     });
   });
 
+  describe('uniq', () => {
+    it('is a function', () => {
+      expect(_.uniq).to.be.a('function');
+    });
+    it('produces a duplicate-free version of the array passed as an argument', () => {
+      let actual = _.uniq([1,2,2,3]);
+      let expected = [1,2,3];
+      actual = _.uniq(['a', 'b', 'c', 'c', 'c']);
+      expected = ['a', 'b', 'c'];
+      expect(actual).to.eql(expected);
+    });
+  });
+
 });

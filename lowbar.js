@@ -67,6 +67,19 @@ _.reject = function (list, predicate) {
   return result;
 };
 
+_.uniq = function (array) {
+  let result = [];
+  for (let i = 0; i < array.length; i++) {
+    if (i === 0) result.push(array[i]);
+    for (let j = 0; j < result.length; j++) {
+      if (array[i] !== result[j] && j === result.length - 1) {
+        result.push(array[i]);
+      }
+    }
+  }
+  return result;
+};
+
 if (typeof module !== 'undefined') {
   module.exports = _;
 }
