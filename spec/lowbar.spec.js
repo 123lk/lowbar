@@ -141,4 +141,16 @@ describe('_', () => {
     });
   });
 
+  describe('pluck', () => {
+    it('is a function', () => {
+      expect(_.pluck).to.be.a('function');
+    });
+    it('extracts a list of property values and returns them as an array', () => {
+      let list = [{name: 'Laura'}, {name: 'Sarah'}, {name: 'Dave'}];
+      let actual = _.pluck(list, 'name');
+      let expected = ['Laura', 'Sarah', 'Dave'];
+      expect(actual).to.eql(expected);
+    });
+  });
+
 });
