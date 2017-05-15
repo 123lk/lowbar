@@ -82,4 +82,17 @@ describe('_', () => {
     });
   });
 
+  describe('filter', () => {
+    it('is a function', () => {
+      expect(_.filter).to.be.a('function');
+    });
+    it('looks through each value in the list, returning an array of all the values that pass a truth test (predicate)', () => {
+      let list = [1,2,3,4,5];
+      let predicate = function (n) {return n > 2;};
+      let actual = _.filter(list, predicate);
+      let expected = [3,4,5];
+      expect(actual).to.eql(expected);
+    });
+  });
+
 });

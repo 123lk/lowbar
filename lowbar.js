@@ -25,11 +25,9 @@ _.indexOf = function (array, value, isSorted) {
   isSorted = isSorted || false;
 
   if (isSorted) {
-
     let first = 0;
     let last = array.length - 1;
     let mid;
-
     while (first < last) {
       mid = Math.floor((first + last) / 2);
       if (array[mid] === value) {
@@ -43,11 +41,8 @@ _.indexOf = function (array, value, isSorted) {
     }
     return -1;
   }
-
   else {
-
     let counter = array.length;
-
     while (counter > 0) {
       for (let i = 0; i < array.length; i++) {
         counter--;
@@ -56,6 +51,16 @@ _.indexOf = function (array, value, isSorted) {
     }
     return -1;
   }
+};
+
+_.filter = function (list, predicate) {
+  
+  let result = [];
+
+  for (let i = 0; i < list.length; i++) {
+    if (predicate(list[i])) result.push(list[i]);
+  }
+  return result; 
 
 };
 
