@@ -1,6 +1,7 @@
 /* global describe, it */
 const path = require('path');
 const expect = require('chai').expect;
+const spy = require('sinon').spy();
 
 const _ = require(path.join(__dirname, '..', './lowbar.js'));
 
@@ -39,6 +40,44 @@ describe('_', () => {
     it('returns the last element of an array', () => {
       let actual = _.last([1,2,3]);
       let expected = 3;
+      expect(actual).to.equal(expected);
+    });
+  });
+
+  describe('each', () => {
+    it('is a function', () => {
+      expect(_.each).to.be.a('function');
+    });
+    it('returns the list that was passed as an argument', () => {
+      let list = [1,2,3];
+      let iteratee = function num (n) {n + 1;};
+      let actual = _.each(list, iteratee);
+      let expected = list;
+      expect(actual).to.eql(expected);
+    });
+    it('calls the iteratee function with each element of the list', () => {
+      _.each([1,2,3], spy);
+      expect(spy.callCount).to.equal(3);
+    });
+  });
+
+  describe('indexOf', () => {
+    it('is a function', () => {
+      expect(_.indexOf).to.be.a('function');
+    });
+    it('returns the index at which value can be found in the array', () => {
+      let actual = _.indexOf([1,2,3], 1);
+      let expected = 0;
+      expect(actual).to.equal(expected);
+    });
+    it('returns -1 if value is not present in the array', () => {
+      let actual = _.indexOf([1,2,3], 4);
+      let expected = -1;
+      expect(actual).to.equal(expected); 
+    });
+    it('uses a binary search if true is passed as an argument for isSorted', () => {
+      let actual = _.indexOf([1,2,3,4,5], 3, true);
+      let expected = 2;
       expect(actual).to.equal(expected);
     });
   });
