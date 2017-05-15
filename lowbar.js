@@ -84,9 +84,9 @@ _.map = function (list, iteratee) {
   let result = [];
 
   if (Array.isArray(list)) {
-  for (let i = 0; i < list.length; i++) {
-    result.push(iteratee(list[i], i, list));
-  } 
+    for (let i = 0; i < list.length; i++) {
+      result.push(iteratee(list[i], i, list));
+    }
   } else {
     for (let key in list) {
       result.push(iteratee(list[key], key, list));
@@ -96,11 +96,25 @@ _.map = function (list, iteratee) {
 };
 
 _.pluck = function (list, propertyName) {
-    let result = [];
+  let result = [];
+  for (let i = 0; i < list.length; i++) {
+    result.push(list[i][propertyName]);
+  }
+  return result;
+};
+
+_.reduce = function (list, iteratee) {
+  let acc = 0;
+  if (Array.isArray(list)) {
     for (let i = 0; i < list.length; i++) {
-      result.push(list[i][propertyName]);
+      acc = iteratee(acc, list[i], i, list);
     }
-    return result; 
+  } else {
+    for (let key in list) {
+      acc = iteratee(acc, list[key], key, list);
+    }
+  }
+  return acc;
 };
 
 
