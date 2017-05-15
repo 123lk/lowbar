@@ -95,4 +95,17 @@ describe('_', () => {
     });
   });
 
+  describe('reject', () => {
+    it('is a function', () => {
+      expect(_.reject).to.be.a('function');
+    });
+    it('returns the values in a list that do not pass the predicate truth test', () => {
+      let list = [1,2,3,4,5];
+      let predicate = function (n) {return n > 2;};
+      let actual = _.reject(list, predicate);
+      let expected = [1, 2];
+      expect(actual).to.eql(expected);
+    });
+  });
+
 });

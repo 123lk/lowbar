@@ -1,7 +1,7 @@
 const _ = {};
 
-_.identity = function (x) {
-  return x;
+_.identity = function (value) {
+  return value;
 };
 
 _.first = function (array) {
@@ -13,7 +13,6 @@ _.last = function (array) {
 };
 
 _.each = function (list, iteratee) {
-
   for (let i = 0; i < list.length; i++) {
     iteratee(list[i]);
   }
@@ -21,9 +20,7 @@ _.each = function (list, iteratee) {
 };
 
 _.indexOf = function (array, value, isSorted) {
-
   isSorted = isSorted || false;
-
   if (isSorted) {
     let first = 0;
     let last = array.length - 1;
@@ -54,14 +51,20 @@ _.indexOf = function (array, value, isSorted) {
 };
 
 _.filter = function (list, predicate) {
-  
   let result = [];
-
   for (let i = 0; i < list.length; i++) {
     if (predicate(list[i])) result.push(list[i]);
   }
-  return result; 
+  return result;
 
+};
+
+_.reject = function (list, predicate) {
+  let result = [];
+  for (let i = 0; i < list.length; i++) {
+    if (!predicate(list[i])) result.push(list[i]);
+  }
+  return result;
 };
 
 if (typeof module !== 'undefined') {
