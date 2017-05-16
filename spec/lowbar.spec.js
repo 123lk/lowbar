@@ -163,7 +163,7 @@ describe('_', () => {
       expect(actual).to.equal(expected);
     });
     it('works for objects as well as arrays', () => {
-      let actual = _.reduce({one: 1, two:  2, three: 3}, function (acc, val) { return acc + val; }, 0);
+      let actual = _.reduce({one: 1, two: 2, three: 3}, function (acc, val) { return acc + val; }, 0);
       let expected = 6;
       expect(actual).to.equal(expected);
     });
@@ -174,12 +174,12 @@ describe('_', () => {
       expect(_.contains).to.be.a('function');
     });
     it('returns true if values is present in the list', () => {
-      let actual = _.contains([1,2,3], 1);
+      let actual = _.contains([1, 2, 3], 1);
       let expected = true;
       expect(actual).to.equal(expected);
     });
     it('returns false if value is not present in the list', () => {
-      let actual = _.contains([1,2,3], 4);
+      let actual = _.contains([1, 2, 3], 4);
       let expected = false;
       expect(actual).to.equal(expected);
     });
@@ -190,22 +190,22 @@ describe('_', () => {
       expect(_.every).to.be.a('function');
     });
     it('returns true if all of the values in the list pass the predicate truth test', () => {
-      let list = [1,2,3];
-      let predicate = function (num) {return num > 0;};
+      let list = [1, 2, 3];
+      let predicate = function (num) { return num > 0; };
       let actual = _.every(list, predicate);
       let expected = true;
       expect(actual).to.equal(expected);
     });
     it('works for objects as well as arrays', () => {
-      let list = {one: 1,two: 2,three: 3};
-      let predicate = function (num) {return num > 0;};
+      let list = {one: 1, two: 2, three: 3};
+      let predicate = function (num) { return num > 0; };
       let actual = _.every(list, predicate);
       let expected = true;
       expect(actual).to.equal(expected);
     });
     it('short-circuits and stops traversing the list if a false element is found', () => {
-      let list = [1,2,3];
-      let predicate = function (num) {return num < 3;};
+      let list = [1, 2, 3];
+      let predicate = function (num) { return num < 3; };
       let actual = _.every(list, predicate);
       let expected = false;
       expect(actual).to.equal(expected);
@@ -217,25 +217,41 @@ describe('_', () => {
       expect(_.some).to.be.a('function');
     });
     it('returns true if any of the values in the list pass the predicate truth test', () => {
-      let list = [1,2,3];
-      let predicate = function (num) {return num > 2;};
+      let list = [1, 2, 3];
+      let predicate = function (num) { return num > 2; };
       let actual = _.some(list, predicate);
       let expected = true;
       expect(actual).to.equal(expected);
     });
     it('works for objects as well as arrays', () => {
-      let list = {one: 1,two: 2,three: 3};
-      let predicate = function (num) {return num > 2;};
+      let list = {one: 1, two: 2, three: 3};
+      let predicate = function (num) { return num > 2; };
       let actual = _.some(list, predicate);
       let expected = true;
       expect(actual).to.equal(expected);
     });
     it('returns false if no values in the list pass the predicate truth test', () => {
-      let list = [1,2,3];
-      let predicate = function (num) {return num > 5;};
+      let list = [1, 2, 3];
+      let predicate = function (num) { return num > 5; };
       let actual = _.some(list, predicate);
       let expected = false;
       expect(actual).to.equal(expected);
+    });
+  });
+
+  describe('extend', () => {
+    it('is a function', () => {
+      expect(_.extend).to.be.a('function');
+    });
+    it('shallowly copies all of the properties in the source objects over to the destination object, and returns the destination object', () => {
+      let actual = _.extend({name: 'laura'}, {pet: 'tiger'});
+      let expected = {name: 'laura', pet: 'tiger'};
+      expect(actual).to.eql(expected);
+    });
+    it('updates the destination object if the source has the same key', () => {
+      let actual = _.extend({name: 'laura', pet: 'tiger'}, {pet: 'penguin'});
+      let expected = {name: 'laura', pet: 'penguin'};
+      expect(actual).to.eql(expected);
     });
   });
 
