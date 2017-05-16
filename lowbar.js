@@ -117,6 +117,28 @@ _.reduce = function (list, iteratee) {
   return acc;
 };
 
+_.contains = function (list, value) {
+  if (_.indexOf(list, value) !== -1) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+_.every = function (list, predicate) {
+  if (Array.isArray(list)) {
+    for (let i = 0; i < list.length; i++) {
+      if (!predicate(list[i])) return false;
+    }
+    return true;
+  } else {
+    for (let key in list) {
+      if (!predicate(list[key])) return false;
+    }
+    return true;
+  }
+};
+
 
 if (typeof module !== 'undefined') {
   module.exports = _;

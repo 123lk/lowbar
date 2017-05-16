@@ -169,4 +169,47 @@ describe('_', () => {
     });
   });
 
+  describe('contains', () => {
+    it('is a function', () => {
+      expect(_.contains).to.be.a('function');
+    });
+    it('returns true if values is present in the list', () => {
+      let actual = _.contains([1,2,3], 1);
+      let expected = true;
+      expect(actual).to.equal(expected);
+    });
+    it('returns false if value is not present in the list', () => {
+      let actual = _.contains([1,2,3], 4);
+      let expected = false;
+      expect(actual).to.equal(expected);
+    });
+  });
+
+  describe('every', () => {
+    it('is a function', () => {
+      expect(_.every).to.be.a('function');
+    });
+    it('returns true if all of the values in the list pass the predicate truth test', () => {
+      let list = [1,2,3];
+      let predicate = function (num) {return num > 0;};
+      let actual = _.every(list, predicate);
+      let expected = true;
+      expect(actual).to.equal(expected);
+    });
+    it('works for objects as well as arrays', () => {
+      let list = {one: 1,two: 2,three: 3};
+      let predicate = function (num) {return num > 0;};
+      let actual = _.every(list, predicate);
+      let expected = true;
+      expect(actual).to.equal(expected);
+    });
+    it('short-circuits and stops traversing the list if a false element is found', () => {
+      let list = [1,2,3];
+      let predicate = function (num) {return num < 3;};
+      let actual = _.every(list, predicate);
+      let expected = false;
+      expect(actual).to.equal(expected);
+    });
+  });
+
 });
