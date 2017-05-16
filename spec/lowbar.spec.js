@@ -50,7 +50,7 @@ describe('_', () => {
     });
     it('returns the list that was passed as an argument', () => {
       let list = [1, 2, 3];
-      let iteratee = function num (n) { n + 1; };
+      let iteratee = function (n) { n + 1; };
       let actual = _.each(list, iteratee);
       let expected = list;
       expect(actual).to.eql(expected);
@@ -251,6 +251,20 @@ describe('_', () => {
     it('updates the destination object if the source has the same key', () => {
       let actual = _.extend({name: 'laura', pet: 'tiger'}, {pet: 'penguin'});
       let expected = {name: 'laura', pet: 'penguin'};
+      expect(actual).to.eql(expected);
+    });
+  });
+
+  describe('defaults', () => {
+    it('is a function', () => {
+      expect(_.defaults).to.be.a('function');
+    });
+    it('fills in undefined properties in object with the first value present in the list of defaults objects', function () {
+      let actual = _.defaults({name: 'laura'}, {name: 'lisa', age: 31});
+      let expected = {name: 'laura', age: 31};
+      expect(actual).to.eql(expected);
+      actual = _.defaults({flavour: 'chocolate'}, {flavour: 'vanilla',sprinkles: 'lots'});
+      expected = {flavour: 'chocolate',sprinkles: 'lots'};
       expect(actual).to.eql(expected);
     });
   });

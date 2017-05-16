@@ -153,9 +153,16 @@ _.some = function (list, predicate) {
 };
 
 _.extend = function (destination, source) {
-
   return Object.assign(destination, source);
+};
 
+_.defaults = function (object, defaults) {
+  for (let key in defaults) {
+    if (!object.hasOwnProperty(key)) {
+      object[key] = defaults[key];
+    }
+  }
+  return object;
 };
 
 if (typeof module !== 'undefined') {
