@@ -82,7 +82,6 @@ _.uniq = function (array) {
 
 _.map = function (list, iteratee) {
   let result = [];
-
   if (Array.isArray(list)) {
     for (let i = 0; i < list.length; i++) {
       result.push(iteratee(list[i], i, list));
@@ -130,13 +129,12 @@ _.every = function (list, predicate) {
     for (let i = 0; i < list.length; i++) {
       if (!predicate(list[i])) return false;
     }
-    return true;
   } else {
     for (let key in list) {
       if (!predicate(list[key])) return false;
     }
-    return true;
   }
+  return true;
 };
 
 _.some = function (list, predicate) {
