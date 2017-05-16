@@ -212,4 +212,31 @@ describe('_', () => {
     });
   });
 
+  describe('some', () => {
+    it('is a function', () => {
+      expect(_.some).to.be.a('function');
+    });
+    it('returns true if any of the values in the list pass the predicate truth test', () => {
+      let list = [1,2,3];
+      let predicate = function (num) {return num > 2;};
+      let actual = _.some(list, predicate);
+      let expected = true;
+      expect(actual).to.equal(expected);
+    });
+    it('works for objects as well as arrays', () => {
+      let list = {one: 1,two: 2,three: 3};
+      let predicate = function (num) {return num > 2;};
+      let actual = _.some(list, predicate);
+      let expected = true;
+      expect(actual).to.equal(expected);
+    });
+    it('returns false if no values in the list pass the predicate truth test', () => {
+      let list = [1,2,3];
+      let predicate = function (num) {return num > 5;};
+      let actual = _.some(list, predicate);
+      let expected = false;
+      expect(actual).to.equal(expected);
+    });
+  });
+
 });
