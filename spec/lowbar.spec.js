@@ -80,13 +80,13 @@ describe('_', () => {
     });
     it('calls the iteratee function with each element from the list', () => {
       _.each([1, 2, 3], spy);
-      _.each({one: 1, two: 2, three: 3}, spy);
+      _.each({ one: 1, two: 2, three: 3 }, spy);
       expect(spy.callCount).to.equal(6);
     });
     it('works for objects as well as arrays', () => {
       let actual = [];
-      let expected = [1,2,3];
-      _.each({one: 1, two: 2, three: 3}, function (num) { return actual.push(num);});
+      let expected = [1, 2, 3];
+      _.each({ one: 1, two: 2, three: 3 }, function (num) { return actual.push(num); });
       expect(actual).to.eql(expected);
     });
   });
@@ -130,15 +130,15 @@ describe('_', () => {
       expect(actual).to.eql(expected);
     });
     it('works when the list is an object or an array', () => {
-      let list = {one: 1, two: 2, three: 3};
-      let predicate = function (n) { return n > 2};
+      let list = { one: 1, two: 2, three: 3 };
+      let predicate = function (n) { return n > 2 };
       let actual = _.filter(list, predicate);
       let expected = [3];
       expect(actual).to.eql(expected);
     });
-    it('returns an empty array if not passed an invalid type', () => {
+    it('returns an empty array if passed an invalid type', () => {
       let list = 'hello';
-      let predicate = function (n) { return n > 2};
+      let predicate = function (n) { return n > 2 };
       let actual = _.filter(list, predicate);
       let expected = [];
       expect(actual).to.eql(expected);
@@ -154,6 +154,13 @@ describe('_', () => {
       let predicate = function (n) { return n > 2; };
       let actual = _.reject(list, predicate);
       let expected = [1, 2];
+      expect(actual).to.eql(expected);
+    });
+    it('works when the list is an object or an array', () => {
+      let list = {one: 1, two: 2, three: 3};
+      let predicate = function (n) { return n >= 2; };
+      let actual = _.reject(list, predicate);
+      let expected = [1];
       expect(actual).to.eql(expected);
     });
   });

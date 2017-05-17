@@ -84,10 +84,18 @@ _.filter = function (list, predicate) {
 
 _.reject = function (list, predicate) {
   let result = [];
-  for (let i = 0; i < list.length; i++) {
-    if (!predicate(list[i])) result.push(list[i]);
+
+  if (Array.isArray(list)) {
+    for (let i = 0; i < list.length; i++) {
+      if (!predicate(list[i])) result.push(list[i]);
+    }
+    return result;
+  } else {
+    for (let key in list) {
+      if (!predicate(list[key])) result.push(list[key]);
+    }
+    return result;
   }
-  return result;
 };
 
 _.uniq = function (array) {
