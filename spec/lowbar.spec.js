@@ -345,6 +345,11 @@ describe('_', () => {
       let expected = { name: 'laura', pet: 'penguin' };
       expect(actual).to.eql(expected);
     });
+    it('returns the destination when not passed a second argument', () => {
+      let actual = _.extend({name: 'Laura'});
+      let expected = {name: 'Laura'};
+      expect(actual).to.eql(expected);
+    });
   });
 
   describe('defaults', () => {
