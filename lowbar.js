@@ -22,7 +22,6 @@ _.last = function (arr, n) {
 };
 
 _.each = function (list, iteratee) {
-
   if (Array.isArray(list) || typeof list === 'string') {
     for (let i = 0; i < list.length; i++) {
       iteratee(list[i], i, list);
