@@ -99,11 +99,11 @@ _.reject = function (list, predicate) {
 
 _.uniq = function (array) {
   let result = [];
-    for (let i = 0; i < array.length; i++) {
-      if (_.indexOf(result, array[i]) === -1) {
-        result.push(array[i]);
-      }
+  for (let i = 0; i < array.length; i++) {
+    if (_.indexOf(result, array[i]) === -1) {
+      result.push(array[i]);
     }
+  }
   return result;
 };
 
@@ -122,11 +122,9 @@ _.map = function (list, iteratee) {
 };
 
 _.pluck = function (list, propertyName) {
-  let result = [];
-  for (let i = 0; i < list.length; i++) {
-    result.push(list[i][propertyName]);
-  }
-  return result;
+  return _.map(list, (element) => {
+    return element[propertyName];
+  });
 };
 
 _.reduce = function (list, iteratee) {
