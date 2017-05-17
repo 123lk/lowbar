@@ -4,17 +4,33 @@ _.identity = function (value) {
   return value;
 };
 
-_.first = function (array) {
-  return array[0];
+_.first = function (arr, n) {
+  if (!arguments.length || arr.length === 0) return undefined;
+  if (arguments.length === 1) {
+    return arr[0];
+  } else {
+    return arr.slice(0, n);
+  }
 };
 
-_.last = function (array) {
-  return array[array.length - 1];
+_.last = function (arr, n) {
+  if (arguments.length === 1) {
+    return arr[arr.length - 1];
+  } else {
+    return arr.slice(n - 1);
+  }
 };
 
 _.each = function (list, iteratee) {
-  for (let i = 0; i < list.length; i++) {
-    iteratee(list[i]);
+  if (Array.isArray(list) || typeof list === 'string') {
+    for (let i = 0; i < list.length; i++) {
+      iteratee(list[i], i, list);
+    }
+  }
+  else if (typeof list === 'object' && !Array.isArray(list)) {
+    for (let key in list) {
+      iteratee(list[key], key, list);
+    }
   }
   return list;
 };
@@ -52,29 +68,39 @@ _.indexOf = function (array, value, isSorted) {
 
 _.filter = function (list, predicate) {
   let result = [];
-  for (let i = 0; i < list.length; i++) {
-    if (predicate(list[i])) result.push(list[i]);
+  if (Array.isArray(list)) {
+    for (let i = 0; i < list.length; i++) {
+      if (predicate(list[i])) result.push(list[i]);
+    }
+    return result;
+  } else {
+    for (let key in list) {
+      if (predicate(list[key])) result.push(list[key]);
+    }
+    return result;
   }
-  return result;
-
 };
 
 _.reject = function (list, predicate) {
   let result = [];
-  for (let i = 0; i < list.length; i++) {
-    if (!predicate(list[i])) result.push(list[i]);
+  if (Array.isArray(list)) {
+    for (let i = 0; i < list.length; i++) {
+      if (!predicate(list[i])) result.push(list[i]);
+    }
+    return result;
+  } else {
+    for (let key in list) {
+      if (!predicate(list[key])) result.push(list[key]);
+    }
+    return result;
   }
-  return result;
 };
 
 _.uniq = function (array) {
   let result = [];
   for (let i = 0; i < array.length; i++) {
-    if (i === 0) result.push(array[i]);
-    for (let j = 0; j < result.length; j++) {
-      if (array[i] !== result[j] && j === result.length - 1) {
-        result.push(array[i]);
-      }
+    if (_.indexOf(result, array[i]) === -1) {
+      result.push(array[i]);
     }
   }
   return result;
@@ -95,15 +121,13 @@ _.map = function (list, iteratee) {
 };
 
 _.pluck = function (list, propertyName) {
-  let result = [];
-  for (let i = 0; i < list.length; i++) {
-    result.push(list[i][propertyName]);
-  }
-  return result;
+  return _.map(list, (element) => {
+    return element[propertyName];
+  });
 };
 
-_.reduce = function (list, iteratee) {
-  let acc = 0;
+_.reduce = function (list, iteratee, acc) {
+  acc = acc || 0;
   if (Array.isArray(list)) {
     for (let i = 0; i < list.length; i++) {
       acc = iteratee(acc, list[i], i, list);
@@ -117,11 +141,14 @@ _.reduce = function (list, iteratee) {
 };
 
 _.contains = function (list, value) {
-  if (_.indexOf(list, value) !== -1) {
-    return true;
+  if (Array.isArray(list)) {
+    if (_.indexOf(list, value) !== -1) return true;
   } else {
-    return false;
+    for (let key in list) {
+      if (list[key] === value) return true;
+    }
   }
+  return false;
 };
 
 _.every = function (list, predicate) {
