@@ -129,6 +129,20 @@ describe('_', () => {
       let expected = [3, 4, 5];
       expect(actual).to.eql(expected);
     });
+    it('works when the list is an object or an array', () => {
+      let list = {one: 1, two: 2, three: 3};
+      let predicate = function (n) { return n > 2};
+      let actual = _.filter(list, predicate);
+      let expected = [3];
+      expect(actual).to.eql(expected);
+    });
+    it('returns an empty array if not passed an invalid type', () => {
+      let list = 'hello';
+      let predicate = function (n) { return n > 2};
+      let actual = _.filter(list, predicate);
+      let expected = [];
+      expect(actual).to.eql(expected);
+    });
   });
 
   describe('reject', () => {

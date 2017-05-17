@@ -27,7 +27,7 @@ _.each = function (list, iteratee) {
     for (let i = 0; i < list.length; i++) {
       iteratee(list[i], i, list);
     }
-  } 
+  }
   else if (typeof list === 'object' && !Array.isArray(list)) {
     for (let key in list) {
       iteratee(list[key], key, list);
@@ -54,7 +54,8 @@ _.indexOf = function (array, value, isSorted) {
       }
     }
     return -1;
-  } else {
+  }
+  else {
     let counter = array.length;
     while (counter > 0) {
       for (let i = 0; i < array.length; i++) {
@@ -68,11 +69,17 @@ _.indexOf = function (array, value, isSorted) {
 
 _.filter = function (list, predicate) {
   let result = [];
-  for (let i = 0; i < list.length; i++) {
-    if (predicate(list[i])) result.push(list[i]);
+  if (Array.isArray(list)) {
+    for (let i = 0; i < list.length; i++) {
+      if (predicate(list[i])) result.push(list[i]);
+    }
+    return result;
+  } else {
+    for (let key in list) {
+      if (predicate(list[key])) result.push(list[key]);
+    }
+    return result;
   }
-  return result;
-
 };
 
 _.reject = function (list, predicate) {
