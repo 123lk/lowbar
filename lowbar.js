@@ -127,8 +127,8 @@ _.pluck = function (list, propertyName) {
   });
 };
 
-_.reduce = function (list, iteratee) {
-  let acc = 0;
+_.reduce = function (list, iteratee, acc) {
+  acc = acc || 0;
   if (Array.isArray(list)) {
     for (let i = 0; i < list.length; i++) {
       acc = iteratee(acc, list[i], i, list);

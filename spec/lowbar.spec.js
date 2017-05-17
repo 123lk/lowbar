@@ -221,6 +221,11 @@ describe('_', () => {
       let expected = ['Laura', 'Sarah', 'Dave'];
       expect(actual).to.eql(expected);
     });
+    it('returns an empty array when an invalid type is passed as an argument', () => {
+      let actual = _.pluck(1, 'name');
+      let expected = [];
+      expect(actual).to.eql(expected);
+    });
   });
 
   describe('reduce', () => {
@@ -236,6 +241,16 @@ describe('_', () => {
       let actual = _.reduce({ one: 1, two: 2, three: 3 }, function (acc, val) { return acc + val; }, 0);
       let expected = 6;
       expect(actual).to.equal(expected);
+    });
+    it('passes each element of an array to the iteratee function', () => {
+      let spy = sinon.spy();
+      _.reduce([1,2,3], spy);
+      expect(spy.callCount).to.equal(3);
+    });
+    it('passes each element of an object to the iteratee function', () => {
+      let spy = sinon.spy();
+      _.reduce({one: 1, two: 2, three: 3, four: 4}, spy);
+      expect(spy.callCount).to.equal(4);
     });
   });
 
