@@ -268,6 +268,13 @@ describe('_', () => {
       let expected = false;
       expect(actual).to.equal(expected);
     });
+    it('works with objects as well as arrays', () => {
+      let actual = _.contains({one: 1, two: 2}, 2);
+      let expected = true;
+      expect(actual).to.equal(expected);
+      actual = _.contains({one: 1, two: 2}, 3);
+      expect(actual).to.equal(false);
+    });
   });
 
   describe('every', () => {

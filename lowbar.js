@@ -142,11 +142,14 @@ _.reduce = function (list, iteratee, acc) {
 };
 
 _.contains = function (list, value) {
-  if (_.indexOf(list, value) !== -1) {
-    return true;
+  if (Array.isArray(list)) {
+    if (_.indexOf(list, value) !== -1) return true;
   } else {
-    return false;
+    for (let key in list) {
+      if (list[key] === value) return true;
+    }
   }
+  return false;
 };
 
 _.every = function (list, predicate) {
