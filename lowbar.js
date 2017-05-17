@@ -4,17 +4,34 @@ _.identity = function (value) {
   return value;
 };
 
-_.first = function (array) {
-  return array[0];
+_.first = function (arr, n) {
+  if (!arguments.length || arr.length === 0) return undefined;
+  if (arguments.length === 1) {
+    return arr[0];
+  } else {
+    return arr.slice(0, n);
+  }
 };
 
-_.last = function (array) {
-  return array[array.length - 1];
+_.last = function (arr, n) {
+  if (arguments.length === 1) {
+    return arr[arr.length - 1];
+  } else {
+    return arr.slice(n - 1);
+  }
 };
 
 _.each = function (list, iteratee) {
-  for (let i = 0; i < list.length; i++) {
-    iteratee(list[i]);
+
+  if (Array.isArray(list) || typeof list === 'string') {
+    for (let i = 0; i < list.length; i++) {
+      iteratee(list[i], i, list);
+    }
+  } 
+  else if (typeof list === 'object' && !Array.isArray(list)) {
+    for (let key in list) {
+      iteratee(list[key], key, list);
+    }
   }
   return list;
 };

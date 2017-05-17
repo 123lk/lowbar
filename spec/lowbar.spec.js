@@ -19,6 +19,8 @@ describe('_', () => {
       let actual = _.identity('foo');
       let expected = 'foo';
       expect(actual).to.equal(expected);
+      actual = _.identity([1, 2, 3]);
+      expected = [1, 2, 3];
     });
   });
 
@@ -26,10 +28,26 @@ describe('_', () => {
     it('is a function', () => {
       expect(_.first).to.be.a('function');
     });
-    it('returns the first element of an array', () => {
+    it('returns the first element', () => {
       let actual = _.first([1, 2, 3]);
       let expected = 1;
       expect(actual).to.equal(expected);
+      actual = _.first('hello');
+      expected = 'h';
+      expect(actual).to.equal(expected);
+    });
+    it('should return the first n elements if n is passed', function () {
+      let actual = _.first([1, 2, 3, 4, 5], 3);
+      let expected = [1, 2, 3];
+      expect(actual).to.eql(expected);
+    });
+    it('should return undefined if no argument or an empty array is passed', function () {
+      let actual = _.first();
+      let expected = undefined;
+      expect(actual).to.eql(expected);
+      actual = _.first([]);
+      expected = undefined;
+      expect(actual).to.eql(expected);
     });
   });
 
@@ -41,6 +59,11 @@ describe('_', () => {
       let actual = _.last([1, 2, 3]);
       let expected = 3;
       expect(actual).to.equal(expected);
+    });
+    it('returns the last n elements of the array if passed an n argument', function () {
+      let actual = _.last([1, 2, 3], 2);
+      let expected = [2, 3];
+      expect(actual).to.eql(expected);
     });
   });
 
@@ -55,9 +78,16 @@ describe('_', () => {
       let expected = list;
       expect(actual).to.eql(expected);
     });
-    it('calls the iteratee function with each element of the list', () => {
+    it('calls the iteratee function with each element from the list', () => {
       _.each([1, 2, 3], spy);
-      expect(spy.callCount).to.equal(3);
+      _.each({one: 1, two: 2, three: 3}, spy);
+      expect(spy.callCount).to.equal(6);
+    });
+    it('works for objects as well as arrays', () => {
+      let actual = [];
+      let expected = [1,2,3];
+      _.each({one: 1, two: 2, three: 3}, function (num) { return actual.push(num);});
+      expect(actual).to.eql(expected);
     });
   });
 
@@ -133,7 +163,7 @@ describe('_', () => {
       expect(actual).to.eql(expected);
     });
     it('works for objects as well as arrays', () => {
-      let list = {one: 1, two: 2, three: 3};
+      let list = { one: 1, two: 2, three: 3 };
       let iteratee = function (num) { return num + 1; };
       let actual = _.map(list, iteratee);
       let expected = [2, 3, 4];
@@ -146,7 +176,7 @@ describe('_', () => {
       expect(_.pluck).to.be.a('function');
     });
     it('extracts a list of property values and returns them as an array', () => {
-      let list = [{name: 'Laura'}, {name: 'Sarah'}, {name: 'Dave'}];
+      let list = [{ name: 'Laura' }, { name: 'Sarah' }, { name: 'Dave' }];
       let actual = _.pluck(list, 'name');
       let expected = ['Laura', 'Sarah', 'Dave'];
       expect(actual).to.eql(expected);
@@ -163,7 +193,7 @@ describe('_', () => {
       expect(actual).to.equal(expected);
     });
     it('works for objects as well as arrays', () => {
-      let actual = _.reduce({one: 1, two: 2, three: 3}, function (acc, val) { return acc + val; }, 0);
+      let actual = _.reduce({ one: 1, two: 2, three: 3 }, function (acc, val) { return acc + val; }, 0);
       let expected = 6;
       expect(actual).to.equal(expected);
     });
@@ -197,7 +227,7 @@ describe('_', () => {
       expect(actual).to.equal(expected);
     });
     it('works for objects as well as arrays', () => {
-      let list = {one: 1, two: 2, three: 3};
+      let list = { one: 1, two: 2, three: 3 };
       let predicate = function (num) { return num > 0; };
       let actual = _.every(list, predicate);
       let expected = true;
@@ -224,7 +254,7 @@ describe('_', () => {
       expect(actual).to.equal(expected);
     });
     it('works for objects as well as arrays', () => {
-      let list = {one: 1, two: 2, three: 3};
+      let list = { one: 1, two: 2, three: 3 };
       let predicate = function (num) { return num > 2; };
       let actual = _.some(list, predicate);
       let expected = true;
@@ -244,13 +274,13 @@ describe('_', () => {
       expect(_.extend).to.be.a('function');
     });
     it('shallowly copies all of the properties in the source objects over to the destination object, and returns the destination object', () => {
-      let actual = _.extend({name: 'laura'}, {pet: 'tiger'});
-      let expected = {name: 'laura', pet: 'tiger'};
+      let actual = _.extend({ name: 'laura' }, { pet: 'tiger' });
+      let expected = { name: 'laura', pet: 'tiger' };
       expect(actual).to.eql(expected);
     });
     it('updates the destination object if the source has the same key', () => {
-      let actual = _.extend({name: 'laura', pet: 'tiger'}, {pet: 'penguin'});
-      let expected = {name: 'laura', pet: 'penguin'};
+      let actual = _.extend({ name: 'laura', pet: 'tiger' }, { pet: 'penguin' });
+      let expected = { name: 'laura', pet: 'penguin' };
       expect(actual).to.eql(expected);
     });
   });
@@ -260,11 +290,11 @@ describe('_', () => {
       expect(_.defaults).to.be.a('function');
     });
     it('fills in undefined properties in object with the first value present in the list of defaults objects', function () {
-      let actual = _.defaults({name: 'laura'}, {name: 'lisa', age: 31});
-      let expected = {name: 'laura', age: 31};
+      let actual = _.defaults({ name: 'laura' }, { name: 'lisa', age: 31 });
+      let expected = { name: 'laura', age: 31 };
       expect(actual).to.eql(expected);
-      actual = _.defaults({flavour: 'chocolate'}, {flavour: 'vanilla',sprinkles: 'lots'});
-      expected = {flavour: 'chocolate',sprinkles: 'lots'};
+      actual = _.defaults({ flavour: 'chocolate' }, { flavour: 'vanilla', sprinkles: 'lots' });
+      expected = { flavour: 'chocolate', sprinkles: 'lots' };
       expect(actual).to.eql(expected);
     });
   });
