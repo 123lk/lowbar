@@ -1,7 +1,7 @@
 /* global describe, it */
 const path = require('path');
 const expect = require('chai').expect;
-const spy = require('sinon').spy();
+const sinon = require('sinon');
 
 const _ = require(path.join(__dirname, '..', './lowbar.js'));
 
@@ -79,8 +79,9 @@ describe('_', () => {
       expect(actual).to.eql(expected);
     });
     it('calls the iteratee function with each element from the list', () => {
+      let spy = sinon.spy();
       _.each([1, 2, 3], spy);
-      _.each({ one: 1, two: 2, three: 3 }, spy);
+      _.each({one: 1, two: 2, three: 3}, spy);
       expect(spy.callCount).to.equal(6);
     });
     it('works for objects as well as arrays', () => {
@@ -114,6 +115,8 @@ describe('_', () => {
       let expected = 2;
       actual = _.indexOf(['a', 'b', 'c', 'd'], 'c', true);
       expected = 2;
+      actual = _.indexOf([1,2,2,3], 2, true);
+      expected = 1;
       expect(actual).to.equal(expected);
     });
   });
@@ -170,10 +173,10 @@ describe('_', () => {
       expect(_.uniq).to.be.a('function');
     });
     it('produces a duplicate-free version of the array passed as an argument', () => {
-      let actual = _.uniq([1, 2, 2, 3]);
-      let expected = [1, 2, 3];
-      actual = _.uniq(['a', 'b', 'c', 'c', 'c']);
-      expected = ['a', 'b', 'c'];
+      let actual = _.uniq([7, 10, 10, 2]);
+      let expected = [7, 10, 2];
+      actual = _.uniq(['a', 'b', 'b', 'b', 'c']);
+      expected = _.uniq(['a', 'b', 'c']);
       expect(actual).to.eql(expected);
     });
   });
@@ -182,7 +185,7 @@ describe('_', () => {
     it('is a function', () => {
       expect(_.map).to.be.a('function');
     });
-    it('produces a new array of values by mapping each value in list through a transformation function (iteratee)', () => {
+    it('produces a new array of values by mapping each value in list', () => {
       let list = [1, 2, 3];
       let iteratee = function (num) { return num + 1; };
       let actual = _.map(list, iteratee);
@@ -195,6 +198,16 @@ describe('_', () => {
       let actual = _.map(list, iteratee);
       let expected = [2, 3, 4];
       expect(actual).to.eql(expected);
+    });
+    it('passes each element of an array to the iteratee function', () => {
+      let spy = sinon.spy();
+      _.map([1,2,3], spy);
+      expect(spy.callCount).to.equal(3);
+    });
+    it('passes each element of an object to the iteratee function', () => {
+      let spy = sinon.spy();
+      _.map({one: 1, two: 2, three: 3, four: 4}, spy);
+      expect(spy.callCount).to.equal(4);
     });
   });
 

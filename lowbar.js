@@ -84,7 +84,6 @@ _.filter = function (list, predicate) {
 
 _.reject = function (list, predicate) {
   let result = [];
-
   if (Array.isArray(list)) {
     for (let i = 0; i < list.length; i++) {
       if (!predicate(list[i])) result.push(list[i]);
@@ -100,14 +99,11 @@ _.reject = function (list, predicate) {
 
 _.uniq = function (array) {
   let result = [];
-  for (let i = 0; i < array.length; i++) {
-    if (i === 0) result.push(array[i]);
-    for (let j = 0; j < result.length; j++) {
-      if (array[i] !== result[j] && j === result.length - 1) {
+    for (let i = 0; i < array.length; i++) {
+      if (_.indexOf(result, array[i]) === -1) {
         result.push(array[i]);
       }
     }
-  }
   return result;
 };
 
