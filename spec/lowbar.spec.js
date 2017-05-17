@@ -98,16 +98,22 @@ describe('_', () => {
     it('returns the index at which value can be found in the array', () => {
       let actual = _.indexOf([1, 2, 3], 1);
       let expected = 0;
+      actual = _.indexOf(['b', 'a', 'r'], 'r');
+      expected = 2;
       expect(actual).to.equal(expected);
     });
     it('returns -1 if value is not present in the array', () => {
       let actual = _.indexOf([1, 2, 3], 4);
       let expected = -1;
+      actual = _.indexOf(['f', 'o', 'o'], 'z');
+      expected = -1;
       expect(actual).to.equal(expected);
     });
     it('uses a binary search if true is passed as an argument for isSorted', () => {
       let actual = _.indexOf([1, 2, 3, 4, 5], 3, true);
       let expected = 2;
+      actual = _.indexOf(['a', 'b', 'c', 'd'], 'c', true);
+      expected = 2;
       expect(actual).to.equal(expected);
     });
   });

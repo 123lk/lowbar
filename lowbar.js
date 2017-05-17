@@ -54,8 +54,7 @@ _.indexOf = function (array, value, isSorted) {
       }
     }
     return -1;
-  }
-  else {
+  } else {
     let counter = array.length;
     while (counter > 0) {
       for (let i = 0; i < array.length; i++) {
